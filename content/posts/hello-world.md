@@ -12,15 +12,15 @@ Open `content/posts/hello-world.md` to follow along with the code.
 
 ---
 
-{{< html.inline >}}
+{{< htmx.inline >}}
 <div
-  hx-get="http://localhost:1314/hello_world"
+  hx-get="{{ .Site.Params.apiBaseUrl }}/hello_world"
   hx-trigger="load"
   hx-vals='js:{"name": new URLSearchParams(window.location.search).get("name")}'
   hx-on="htmx:configRequest: console.log('detail:', event.detail); event.detail.headers='';" />
   <p>Content loading from API...</p>
 </div>
-{{< /html.inline >}}
+{{< /htmx.inline >}}
 
 ---
 
