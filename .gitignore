@@ -1,0 +1,8 @@
+.hugo_build.lock
+build
+public
+tmp
+themes/ananke
+bin/build
+bin/develop
+resources/_gen/

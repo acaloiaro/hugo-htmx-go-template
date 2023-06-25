@@ -1,0 +1,4 @@
+[Params]
+  # In production, if your static content and API server are served from different URLs, change `apiBaseUrl` to point at the
+  # base URL for your API server, e.g. apiBaseUrl = 'https://api.example.com/'
+  apiBaseUrl = ''

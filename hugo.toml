@@ -1,0 +1,6 @@
+baseURL = '/'
+languageCode = 'en-us'
+title = 'hugo-htmx-go-template'
+theme = 'ananke'
+enableInlineShortcodes = true
+
