@@ -1,11 +1,13 @@
 package main
 
 import (
+	"bytes"
 	"embed"
 	"fmt"
 	"io/fs"
 	"log"
 	"net/http"
+	"text/template"
 
 	"github.com/a-h/templ"
 	"github.com/acaloiaro/hugo-htmx-go-template/partials"
@@ -25,6 +27,9 @@ func main() {
 		return func(w http.ResponseWriter, r *http.Request) {
 			// in development, the Origin is the the Hugo server, i.e. http://localhost:1313
 			// but in production, it is the domain name where one's site is deployed
+			//
+			// CHANGE THIS: You likely do not want to allow any origin (*) in production. The value should be the base URL of
+			// where your static content is served
 			w.Header().Set("Access-Control-Allow-Origin", "*")
 			w.Header().Set("Access-Control-Allow-Methods", "GET, POST")
 			w.Header().Set("Access-Control-Allow-Headers", "Content-Type, hx-target, hx-current-url, hx-request")
@@ -58,10 +63,16 @@ func helloWorld(w http.ResponseWriter, r *http.Request) {
 		name = "World"
 	}
 
-	if err := partials.HelloWorld(name).Render(r.Context(), w); err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
+	tmpl := template.Must(template.ParseFiles("partials/helloworld.html"))
+	var buff = bytes.NewBufferString("")
+	err := tmpl.Execute(buff, map[string]string{"Name": name})
+	if err != nil {
+		ise(err, w)
 		return
 	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Write(buff.Bytes())
 }
 
 // this handler accepts POST requests to /hello_world_form
