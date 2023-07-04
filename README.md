@@ -59,7 +59,7 @@ If you'll be using the API server, it's useful to install `air` to hot redeploy 
 go install github.com/cosmtrek/air@latest
 ```
 
-To make changes to `templ` templates (.templ files), you will need to install `templ`. Using `templ` is optional. The [goodbye world](https://github.com/acaloiaro/hugo-htmx-go-template/blob/main/server.go#L83) example shows `templ` in action.
+To make changes to `templ` templates (.templ files), first install `templ`. Using `templ` is optional. The [goodbye world](https://github.com/acaloiaro/hugo-htmx-go-template/blob/main/server.go#L83) example shows `templ` in action.
 
 ```bash
 go install github.com/a-h/templ/cmd/templ@latest
