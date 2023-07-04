@@ -4,10 +4,13 @@ import (
 	"bytes"
 	"embed"
 	"fmt"
-	"html/template"
 	"io/fs"
 	"log"
 	"net/http"
+	"text/template"
+
+	"github.com/a-h/templ"
+	"github.com/acaloiaro/hugo-htmx-go-template/partials"
 )
 
 //go:embed all:public
@@ -20,9 +23,28 @@ func main() {
 	// Serve all hugo content (the 'public' directory) at the root url
 	mux.Handle("/", http.FileServer(http.FS(serverRoot)))
 
+	cors := func(h http.Handler) http.HandlerFunc {
+		return func(w http.ResponseWriter, r *http.Request) {
+			// in development, the Origin is the the Hugo server, i.e. http://localhost:1313
+			// but in production, it is the domain name where one's site is deployed
+			//
+			// CHANGE THIS: You likely do not want to allow any origin (*) in production. The value should be the base URL of
+			// where your static content is served
+			w.Header().Set("Access-Control-Allow-Origin", "*")
+			w.Header().Set("Access-Control-Allow-Methods", "GET, POST")
+			w.Header().Set("Access-Control-Allow-Headers", "Content-Type, hx-target, hx-current-url, hx-request")
+			if r.Method == "OPTIONS" {
+				w.WriteHeader(http.StatusNoContent)
+				return
+			}
+			h.ServeHTTP(w, r)
+		}
+	}
+
 	// Add any number of handlers for custom endpoints here
-	mux.HandleFunc("/hello_world", helloWorld)
-	mux.HandleFunc("/hello_world_form", helloWorldForm)
+	mux.HandleFunc("/goodbyeworld.html", cors(templ.Handler(partials.GoodbyeWorld())))
+	mux.HandleFunc("/hello_world", cors(http.HandlerFunc(helloWorld)))
+	mux.HandleFunc("/hello_world_form", cors(http.HandlerFunc(helloWorldForm)))
 
 	fmt.Printf("Starting API server on port 1314\n")
 	if err := http.ListenAndServe("0.0.0.0:1314", mux); err != nil {
@@ -36,15 +58,6 @@ func main() {
 //
 // It responds with the the HTML partial `partials/helloworld.html`
 func helloWorld(w http.ResponseWriter, r *http.Request) {
-	// in development, the Origin is the the Hugo server, i.e. http://localhost:1313
-	// but in production, it is the domain name where one's site is deployed
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-
-	if r.Method == "OPTIONS" {
-		w.WriteHeader(http.StatusNoContent)
-		return
-	}
-
 	name := r.URL.Query().Get("name")
 	if name == "null" || name == "" {
 		name = "World"
@@ -68,18 +81,6 @@ func helloWorld(w http.ResponseWriter, r *http.Request) {
 //
 // It responds with a simple greeting HTML partial
 func helloWorldForm(w http.ResponseWriter, r *http.Request) {
-	// in development, the Origin is the the Hugo server, i.e. http://localhost:1313
-	// but in production, it is the domain name where one's site is deployed
-	// for this demo, we're using `*` to keep things simple
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-
-	if r.Method == "OPTIONS" {
-		w.Header().Set("Access-Control-Allow-Methods", "POST")
-		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, hx-current-url, hx-request")
-		w.WriteHeader(http.StatusNoContent)
-		return
-	}
-
 	name := "World"
 	// The name is not in the query param, let's see if it was submitted as a form
 	if err := r.ParseForm(); err != nil {
@@ -88,23 +89,10 @@ func helloWorldForm(w http.ResponseWriter, r *http.Request) {
 	}
 
 	name = r.FormValue("name")
-	// we're dealing with a really simple template; let's use an inline string instead of a whole separate file for this
-	// one
-	tmpl, err := template.New("form_response").Parse("<h3>Greeting: Hello, {{ .Name }}!</h3>")
-	if err != nil {
-		ise(err, w)
+	if err := partials.HelloWorldGreeting(name).Render(r.Context(), w); err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-
-	var buff = bytes.NewBufferString("")
-	err = tmpl.Execute(buff, map[string]string{"Name": name})
-	if err != nil {
-		ise(err, w)
-		return
-	}
-
-	w.WriteHeader(http.StatusOK)
-	w.Write(buff.Bytes())
 }
 
 func ise(err error, w http.ResponseWriter) {

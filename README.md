@@ -1,16 +1,25 @@
 # hugo-htmx-go-template
 
-This is a project template combining [Hugo](https://gohugo.io), [htmx](https://htmx.org), and an optional API server written in Go, using `html/template` for HTML rendering.
+This is a project template combining [Hugo](https://gohugo.io), [htmx](https://htmx.org), and an optional API server written in Go, using `html/template` or [templ](https://github.com/a-h/templ/) for HTML rendering.
 
 ## Why?
 
-Hugo is a fantastic static site build tool, and there are few things about Hugo that can or should be improved.
+Hugo is a fantastic static site building tool, and there are few things about Hugo that can or should be improved.
 
-The existence of this project template should in no way suggest that static sites should be dynamic. If your site _can_ be static, it _should_ be static.
+The existence of this project template does not suggest that all static sites should be dynamic. If your site _can_ be static, it _should_ be static.
 
-Yet there are instances in which one might need to add dynamic functionality to static Hugo sites. That is the purpose of this project template. Not to make all static sites dynamic, but to provide a simple solution to add islands of dynamic behavior to static sites.
+Yet there are instances in which one might want to add dynamic functionality to static Hugo sites. That is the purpose of this project template. Not to make all static sites dynamic, but to provide a simple solution to add islands of dynamic behavior to static sites.
 
-This allows us to build fast, easily deployable HTML content, but with the added ability of meeting a new class dynamic behavior needs.
+This allows us to build fast, easily deployable HTML content, with the added ability of meeting a new class dynamic behavior needs.
+
+Example use cases include
+
+- Contact forms
+- Comment systems
+- Up/Down vote systems
+- You know ... website stuff
+
+You shouldn't have to reach for a SaaS product to offer dynamic content on your static sites.
 
 ## About
 
@@ -24,8 +33,8 @@ This template provides example code and simple developer tooling for running Hug
 
 **What developer tooling is provided?**
 
-1. `bin/develop`: This utility both starts the hugo server (`hugo server`) and the API server (`go run server.go`) for development. If the user has `air` installed (https://github.com/cosmtrek/air), it will hot reload the API server code when changes to server.go are made.
-2. `bin/build`: This utility builds a binary with your entire Hugo site embedded within. Note: this is only to be used to deploy Hugo sites as a self-contained binary.
+1. `bin/develop`: This utility both starts the hugo server (`hugo server`) and the API server (`go run server.go`) for development. If the user has `air` installed (https://github.com/cosmtrek/air), API server code will hot-reload when changes to server.go are made.
+2. `bin/build`: This utility builds a binary with your entire Hugo site embedded within. This allows Hugo sites to be deployed as a self-contained binary.
 
 ## Getting Started
 
@@ -44,10 +53,16 @@ go build -o bin/build internal/cmd/build/main.go
 mkdir public && touch public/.empty
 ```
 
-If you'll be using the API server, it's useful to install `air` if you want auto-rebuild functionality when running `bin/develop`:
+If you'll be using the API server, it's useful to install `air` to hot redeploy Go code changes when running `bin/develop`:
 
 ```bash
 go install github.com/cosmtrek/air@latest
+```
+
+To make changes to `templ` templates (.templ files), first install `templ`. Using `templ` is optional. The [goodbye world](https://github.com/acaloiaro/hugo-htmx-go-template/blob/main/server.go#L83) example shows `templ` in action.
+
+```bash
+go install github.com/a-h/templ/cmd/templ@latest
 ```
 
 ## Run
@@ -56,15 +71,19 @@ To start the development server(s), run `bin/develop`
 
 Hugo will run on its develop port at [http://localhost:1313](http://localhost:1313) and the API server runs on [http://localhost:1314](http://localhost:1314).
 
-Example content using Hugo/htmx/go api is available at: [http://localhost:1313/posts/hello-world/](http://localhost:1313/posts/hello-world/)
+Example content is available at: [http://localhost:1313/posts/hello-world/](http://localhost:1313/posts/hello-world/)
 
-You can also use `bin/build` to build a fat binary of your Hugo site, which will be available at  [http://localhost:1314](http://localhost:1314) after running `build/server`.
+`bin/build` can be used to build fat binaries of your Hugo site, which will be available at  [http://localhost:1314](http://localhost:1314) after running `build/server`.
 
 ![screenshot](https://user-images.githubusercontent.com/3331648/248586236-1ad03704-4f13-418c-aa9a-3122742c6b8c.png)
 
+## Changing `templ` templates
+
+To use `templ` templates, you will need to `templ` installed. The `air` configuration watches for changes to `templ` files and automatically builds them.
+
 ## Deploy
 
-Hugo sites made from this template can be deployed in two ways.
+Hugo sites made from this template project can be deployed in two ways.
 
 ### Traditional deployment
 
