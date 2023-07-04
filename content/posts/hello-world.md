@@ -51,8 +51,11 @@ Here we are using a Hugo concept called an "inline shortcode". This allows us to
 {{< htmx.inline >}}
 <div
   hx-get="/content.html"
-  hx-trigger="click" />
+  hx-trigger="click"
+  hx-target="#content_target"
+  hx-swap="beforeend" />
   <button>Load content</button>
+  <div id="content_target"></div>
 </div>
 {{< /htmx.inline >}}
 
