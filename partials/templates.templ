@@ -1,0 +1,18 @@
+package partials
+
+templ HelloWorld(name string) {
+	<div>
+		<p>This content is coming from our API server. It's a standard <strong>text/html</strong>template: <strong>partials/helloworld.html</strong>. The template has a single variable named <strong>Name</strong>, which it greets below.</p>
+	</div>
+	<p>If you set the <strong>name</strong>URL param, it greets you by name, e.g. <a href="/posts/hello-world/?name=foobar">/posts/hello-world/?name=foobar</a></p>
+	@HelloWorldGreeting(name)
+}
+
+templ HelloWorldGreeting(name string) {
+	<h3>Greeting: Hello, { name }!</h3>
+}
+
+templ GoodbyeWorld() {
+	<p>Goodbye, World!</p>
+}
+

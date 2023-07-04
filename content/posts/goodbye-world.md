@@ -10,7 +10,7 @@ Every time `Click Me!` is clicked, a request is sent to fetch static template `/
 
 {{< html.inline >}}
 <button
-  hx-get="/goodbyeworld.html"
+  hx-get="{{ .Site.Params.apiBaseUrl }}/goodbyeworld.html"
   hx-trigger="click"
   hx-target="#goodbye"
   hx-swap="beforeend">
