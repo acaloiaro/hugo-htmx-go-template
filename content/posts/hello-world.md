@@ -43,3 +43,17 @@ Here we are using a Hugo concept called an "inline shortcode". This allows us to
 </form>
 {{< /htmx.inline >}}
 
+
+---
+
+## Let's add a simple button that loads content
+
+{{< htmx.inline >}}
+<div
+  hx-get="/content.html"
+  hx-trigger="click" />
+  <button>Load content</button>
+</div>
+{{< /htmx.inline >}}
+
+
