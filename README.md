@@ -1,5 +1,7 @@
 # hugo-htmx-go-template
 
+Make static Hugo sites dynamic with htmx and go
+
 This is a project template combining [Hugo](https://gohugo.io), [htmx](https://htmx.org), and an optional API server written in Go, using `html/template` or [templ](https://github.com/a-h/templ/) for HTML rendering.
 
 ## Why?
