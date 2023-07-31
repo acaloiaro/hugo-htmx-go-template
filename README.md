@@ -4,6 +4,9 @@ Make static Hugo sites dynamic with htmx and go
 
 This is a project template combining [Hugo](https://gohugo.io), [htmx](https://htmx.org), and an optional API server written in Go, using `html/template` or [templ](https://github.com/a-h/templ/) for HTML rendering.
 
+# This template in action
+
+You can see this template in action at https://garbagespeak.com and its source code is at https://github.com/acaloiaro/garbagespeak.com
 ## Why?
 
 Hugo is a fantastic static site building tool, and there are few things about Hugo that can or should be improved.
