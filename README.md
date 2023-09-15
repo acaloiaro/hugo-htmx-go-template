@@ -82,11 +82,11 @@ Example content is available at: [http://localhost:1313/posts/hello-world/](http
 
 ![screenshot](https://user-images.githubusercontent.com/3331648/248586236-1ad03704-4f13-418c-aa9a-3122742c6b8c.png)
 
-## Changing `templ` templates
+**Changing `templ` templates**
 
 To use `templ` templates, you will need to `templ` installed. The `air` configuration watches for changes to `templ` files and automatically builds them.
 
-## Deploy
+## Deploying
 
 Hugo sites made from this template project can be deployed in two ways.
 
