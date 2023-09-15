@@ -70,7 +70,7 @@ To make changes to `templ` templates (.templ files), first install `templ`. Usin
 go install github.com/a-h/templ/cmd/templ@latest
 ```
 
-## Run
+**Run locally**
 
 To start the development server(s), run `bin/develop`
 
