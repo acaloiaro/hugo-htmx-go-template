@@ -9,7 +9,7 @@ This is a project template combining [Hugo](https://gohugo.io), [htmx](https://h
 You can see this template in action at https://garbagespeak.com and its source code is at https://github.com/acaloiaro/garbagespeak.com
 ## Why?
 
-Hugo is a fantastic static site building tool, and there are few things about Hugo that can /or should be improved.
+Hugo is a fantastic static site building tool, and there are few things about Hugo that can or should be improved.
 
 The existence of this project template does not suggest that all static sites should be dynamic. If your site _can_ be static, it _should_ be static.
 
