@@ -39,7 +39,7 @@ This template provides example code and simple developer tooling for running Hug
 **What developer tooling is provided?**
 
 1. `bin/develop`: This utility both starts the hugo server (`hugo server`) and the API server (`go run server.go`) for development. If the user has `air` installed (https://github.com/cosmtrek/air), API server code will hot-reload when changes to server.go are made.
-2. `bin/build`: This utility builds a binary with your entire Hugo site embedded within. This allows Hugo sites to be deployed as a self-contained binary.
+2. `bin/build`: This utility builds a binary of your API (`server.go`), with your entire Hugo site embedded within. This allows Hugo sites to be deployed as a self-contained binary.
 
 ## Getting Started
 
