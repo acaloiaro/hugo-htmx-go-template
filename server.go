@@ -64,7 +64,7 @@ func helloWorld(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tmpl := template.Must(template.ParseFiles("partials/helloworld.html"))
-	var buff = bytes.NewBufferString("")
+	buff := bytes.NewBufferString("")
 	err := tmpl.Execute(buff, map[string]string{"Name": name})
 	if err != nil {
 		ise(err, w)
@@ -82,7 +82,6 @@ func helloWorld(w http.ResponseWriter, r *http.Request) {
 // It responds with a simple greeting HTML partial
 func helloWorldForm(w http.ResponseWriter, r *http.Request) {
 	name := "World"
-	// The name is not in the query param, let's see if it was submitted as a form
 	if err := r.ParseForm(); err != nil {
 		ise(err, w)
 		return
