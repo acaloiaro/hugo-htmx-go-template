@@ -1,3 +1,5 @@
+**NOTICE**: This repository has been moved to [https://code.adriano.fyi/me/hugo-htmx-go-template](https://code.adriano.fyi/me/hugo-htmx-go-template). Microsoft has shown little interest in stewarding what was once the best and largest open source community. This small act of migration is my way showing that we don't all support Microsoft's disinterest.
+
 # hugo-htmx-go-template
 
 Make static Hugo sites dynamic with htmx and go
@@ -119,4 +121,3 @@ Build a fat binary for OpenBSD and AMD64 architecture
 ```bash
 GOOS=openbsd GOARCH=amd64 bin/build
 ```
-
